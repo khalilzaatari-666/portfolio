@@ -1,0 +1,293 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------- */
+/* Design tokens — "cahier d'ingénieur" : papier, encre, un accent signal     */
+/* -------------------------------------------------------------------------- */
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Menlo, Consolas, monospace;
+  --font-serif: var(--font-instrument-serif), "Iowan Old Style", Georgia, serif;
+
+  --color-bg: #f5f3ee;
+  --color-surface: #fbfaf7;
+  --color-ink: #17150f;
+  --color-muted: #625d52;
+  --color-faint: #9a9488;
+  --color-line: #dedad0;
+  --color-line-strong: #17150f;
+  --color-accent: #d4491b;
+  --color-accent-soft: #f7e3d8;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-bg: #121110;
+    --color-surface: #1a1917;
+    --color-ink: #ede8dd;
+    --color-muted: #a39d90;
+    --color-faint: #6e685d;
+    --color-line: #2a2824;
+    --color-line-strong: #ede8dd;
+    --color-accent: #ff6b35;
+    --color-accent-soft: #33201a;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #121110;
+  --color-surface: #1a1917;
+  --color-ink: #ede8dd;
+  --color-muted: #a39d90;
+  --color-faint: #6e685d;
+  --color-line: #2a2824;
+  --color-line-strong: #ede8dd;
+  --color-accent: #ff6b35;
+  --color-accent-soft: #33201a;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Base                                                                       */
+/* -------------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.005em;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+/* Grain papier : un bruit SVG très léger, fixe, au-dessus de tout */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] body::before {
+  mix-blend-mode: screen;
+  opacity: 0.18;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body::before {
+    mix-blend-mode: screen;
+    opacity: 0.18;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Typographic utilities                                                      */
+/* -------------------------------------------------------------------------- */
+.display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+}
+
+.display em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* Lien avec soulignement qui se dessine */
+.u-link {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.u-link:hover,
+.u-link:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Bouton "encre" : pilule pleine qui s'inverse au survol */
+.btn-ink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-line-strong);
+  background: var(--color-line-strong);
+  color: var(--color-bg);
+  padding: 0.8rem 1.3rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 999px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+.btn-ink:hover {
+  background: transparent;
+  color: var(--color-ink);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--color-line);
+  color: var(--color-ink);
+  padding: 0.8rem 1.3rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 999px;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--color-line-strong);
+  background: var(--color-surface);
+}
+
+/* Filets horizontaux typographiques */
+.rule {
+  border-top: 1px solid var(--color-line);
+}
+.rule-strong {
+  border-top: 1px solid var(--color-line-strong);
+}
+
+/* Emplacement image vide : hachures fines, en attendant la vraie image */
+.img-slot {
+  background-color: var(--color-surface);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    var(--color-line) 10px 11px
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Motion                                                                     */
+/* -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Entrée du hero : chaque bloc monte, décalé */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  opacity: 0;
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Trait qui se trace de gauche à droite */
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.draw {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: draw 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Défilement continu de la stack */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Point "disponible" qui respire */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.7);
+    opacity: 0.3;
+  }
+}
+.breathe {
+  animation: breathe 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  body {
+    transition: none;
+  }
+  .reveal,
+  .rise,
+  .draw {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+  .marquee,
+  .breathe {
+    animation: none;
+  }
+}
