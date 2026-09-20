@@ -1,120 +1,59 @@
-# Portfolio — Khalil Zaatari
+# khalilzaatari.com
 
-Portfolio personnel de **Khalil Zaatari** — Développeur Full Stack & Data Science.
-Construit avec **Next.js 15** (App Router), **TypeScript** et **Tailwind CSS v4**.
+Mon portfolio. Une seule page, en français, où je présente ce que je fais :
+du développement full stack (React / Next.js / Node) et de la data science.
 
-## ✨ Aperçu
+Stack : Next.js 15 (App Router), TypeScript, Tailwind CSS v4. Pas de CMS,
+pas de librairie d'animation, pas de dépendance superflue — tout le contenu
+vit dans un fichier TypeScript et le reste est du CSS.
 
-Site vitrine d'une seule page, responsive, en français, avec :
-
-- Section hero avec accroche et liens (email, GitHub, LinkedIn, CV)
-- À propos
-- Compétences regroupées (Frontend, Backend, Data Science, Big Data…)
-- Projets en production (Capitol.ma, Horkos WM)
-- Parcours (expérience, formation, certifications)
-- Contact (liens directs)
-- Animations d'apparition au scroll, thème clair minimaliste
-
-## 🚀 Démarrage local
+## Lancer en local
 
 ```bash
-# 1. Installer les dépendances
 npm install
-
-# 2. Lancer le serveur de développement
-npm run dev
-# → http://localhost:3000
-
-# 3. Build de production
-npm run build
-npm run start
+npm run dev        # http://localhost:3000
 ```
 
-Prérequis : **Node.js 18.18+** (recommandé : Node 20 ou 22).
+`npm run build` puis `npm run start` pour tester la version de production.
+Node 20 ou 22 recommandé.
 
-## ✏️ Modifier le contenu
+## Où modifier quoi
 
-Tout le contenu (profil, compétences, projets, expériences, certifications)
-est centralisé dans un seul fichier :
+| Je veux…                               | Fichier                                    |
+| -------------------------------------- | ------------------------------------------ |
+| changer un texte, un projet, une expé  | `src/data/content.ts`                      |
+| remplacer un CV                        | `public/cv-fullstack.pdf`, `public/cv-datascience.pdf` |
+| changer mon portrait / une capture     | `public/images/` + le chemin dans `content.ts` |
+| toucher aux couleurs ou aux polices    | bloc `@theme` en haut de `src/app/globals.css` |
+| modifier le SEO / Open Graph           | `src/app/layout.tsx`, `src/app/opengraph-image.tsx` |
+| changer le numéro WhatsApp             | `src/components/WhatsappButton.tsx`        |
 
-```
-src/data/content.ts
-```
+Les composants dans `src/components/` sont volontairement bêtes : ils lisent
+`content.ts` et affichent. Ajouter un projet = ajouter un objet dans le tableau
+`projects`, la numérotation des figures suit toute seule.
 
-Modifie les valeurs, sauvegarde, et le site se met à jour. Aucun composant à
-toucher pour changer un texte, un projet ou un lien.
+## Design
 
-### Remplacer les CV
+Je voulais éviter le look "template SaaS". Le parti pris est celui d'un cahier
+d'ingénieur : fond papier, un serif pour les titres (Instrument Serif), un mono
+pour les étiquettes (Geist Mono), des filets fins, des sections numérotées et
+une seule couleur d'accent. Un léger grain SVG est posé sur toute la page.
 
-Les fichiers PDF sont dans `public/` :
+Quelques détails que j'aime bien :
 
-```
-public/cv-fullstack.pdf
-public/cv-datascience.pdf
-```
+- le thème sombre suit le système, avec un bouton pour forcer l'un ou l'autre
+  (stocké en `localStorage`, appliqué avant le premier rendu pour éviter le flash) ;
+- l'heure locale d'Agadir dans le hero et le footer ;
+- les captures des projets sont servies telles quelles (`unoptimized`) pour que
+  le texte reste net ;
+- l'image Open Graph est générée au build avec la même police que le site ;
+- tout respecte `prefers-reduced-motion`.
 
-Remplace-les par tes versions à jour (garde les mêmes noms), ou change les
-chemins `cvFullStack` / `cvDataScience` dans `src/data/content.ts`.
+## Déploiement
 
-## 🌐 Déploiement + URL propre
+Le site est déployé sur Vercel depuis ce dépôt. Chaque push sur `main`
+redéploie. Le domaine est branché via Cloudflare (CNAME, mode « DNS only »).
 
-### Option recommandée — Vercel (créateurs de Next.js)
-
-1. Pousse ce dossier sur un dépôt GitHub :
-
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit — portfolio"
-   git branch -M main
-   git remote add origin https://github.com/khalilzaatari-666/portfolio.git
-   git push -u origin main
-   ```
-
-2. Va sur [vercel.com](https://vercel.com) → **Add New… → Project** →
-   importe le dépôt. Vercel détecte Next.js automatiquement : clique
-   **Deploy**. Rien à configurer.
-
-3. **Nom de domaine propre** : dans le projet Vercel →
-   **Settings → Domains → Add**. Tu peux :
-   - utiliser le sous-domaine gratuit `khalil-zaatari.vercel.app`, ou
-   - brancher ton propre domaine (ex. `khalilzaatari.com`). Vercel te donne
-     les enregistrements DNS (A / CNAME) à ajouter chez ton registrar
-     (Namecheap, Cloudflare, GoDaddy…). Le HTTPS est automatique.
-
-   > 💡 Si tu utilises Cloudflare comme DNS (tu connais déjà), ajoute un
-   > enregistrement `CNAME` `@`/`www` vers la cible fournie par Vercel,
-   > en mode « DNS only » (nuage gris).
-
-### Alternatives
-
-- **Cloudflare Pages** : build command `npm run build`, framework preset
-  « Next.js ». Domaine personnalisé inclus.
-- **Netlify** : détection automatique Next.js, ajoute ton domaine dans
-  *Domain settings*.
-
-## 🔧 Personnalisation du design
-
-- Couleurs, polices et espacements : variables CSS en haut de
-  `src/app/globals.css` (bloc `@theme`). Change `--color-accent` pour
-  changer la couleur principale.
-- Métadonnées SEO / Open Graph : `src/app/layout.tsx` (pense à mettre à jour
-  `siteUrl` avec ton vrai domaine).
-
-## 🗂️ Structure
-
-```
-src/
-├─ app/
-│  ├─ layout.tsx      # <html>, métadonnées SEO, polices
-│  ├─ page.tsx        # assemble les sections
-│  ├─ globals.css     # thème + styles de base
-│  └─ icon.svg        # favicon (monogramme)
-├─ components/        # Nav, Hero, About, Skills, Projects, Experience, Contact, Footer
-└─ data/
-   └─ content.ts      # ← tout le contenu ici
-```
-
----
-
-Fait avec Next.js. Bon déploiement 🚀
+Si tu forkes ce dépôt pour faire ton propre portfolio : change `siteUrl` dans
+`src/app/layout.tsx`, remplace `content.ts`, les images et les CV, et c'est
+tout.
