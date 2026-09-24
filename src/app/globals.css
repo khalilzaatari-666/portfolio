@@ -197,7 +197,6 @@ body::before {
   transform: translateY(18px);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
@@ -255,6 +254,114 @@ body::before {
   animation-play-state: paused;
 }
 
+/* Moment focal du hero : chaque ligne du nom monte derrière sa ligne de base,
+   comme un caractère posé sur la page. Le masque garde de la place pour les
+   ascendantes (line-height 0.95) sans toucher à la mise en page. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0;
+  margin: -0.12em 0;
+}
+.line-mask > span {
+  display: block;
+  transform: translateY(110%);
+  animation: typeset 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes typeset {
+  to {
+    transform: none;
+  }
+}
+
+/* Le seul trait de couleur de la page arrive en dernier : encre → accent */
+.display em.stroke {
+  color: var(--color-ink);
+  animation: stroke 0.7s ease forwards;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes stroke {
+  to {
+    color: var(--color-accent);
+  }
+}
+
+/* Filet fort de section : se trace quand l'en-tête entre dans l'écran */
+.rule-draw {
+  position: relative;
+}
+.rule-draw::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: var(--color-line-strong);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+.rule-draw.is-visible::before {
+  transform: scaleX(1);
+}
+
+/* Lien de nav actif : le soulignement reste tracé */
+.u-link.is-active {
+  background-size: 100% 1px;
+}
+
+/* Menu mobile : s'ouvre par la grille (pas de hauteur animée), items décalés */
+.menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu > div {
+  min-height: 0;
+  overflow: hidden;
+}
+.menu li {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.menu.is-open {
+  grid-template-rows: 1fr;
+}
+.menu.is-open li {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(60ms + var(--i, 0) * 45ms);
+}
+
+/* Changement de thème : l'encre se répand depuis le bouton (View Transitions).
+   Sans support, le fondu de body prend le relais. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: ink-spread 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes ink-spread {
+  from {
+    clip-path: circle(0 at var(--vt-x, 100%) var(--vt-y, 0));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x, 100%) var(--vt-y, 0));
+  }
+}
+html:active-view-transition body {
+  transition: none;
+}
+
+/* Boucles non essentielles arrêtées hors écran */
+[data-paused] .marquee,
+[data-paused] .breathe {
+  animation-play-state: paused;
+}
+
 /* Point "disponible" qui respire */
 @keyframes breathe {
   0%,
@@ -280,11 +387,35 @@ body::before {
   }
   .reveal,
   .rise,
-  .draw {
+  .draw,
+  .line-mask > span,
+  .menu li {
     opacity: 1;
     transform: none;
     animation: none;
     transition: none;
+  }
+  /* Le fondu reste : c'est l'état (visible / pas visible) qui compte, pas le trajet */
+  .reveal {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+  }
+  .display em.stroke {
+    color: var(--color-accent);
+    animation: none;
+  }
+  .rule-draw::before {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .menu {
+    transition: none;
+  }
+  ::view-transition-new(root) {
+    animation: none;
   }
   .marquee,
   .breathe {

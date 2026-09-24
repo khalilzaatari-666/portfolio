@@ -1,7 +1,8 @@
-import { profile } from "@/data/content";
+import { content, profile, type Lang } from "@/data/content";
 import Clock from "./Clock";
 
-export default function Footer() {
+export default function Footer({ lang }: { lang: Lang }) {
+  const t = content[lang].footer;
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-line-strong">
@@ -10,7 +11,7 @@ export default function Footer() {
           © {year} {profile.name}
         </p>
         <p className="sm:text-center">
-          Fait à Agadir — <Clock />
+          {t.madeIn} — <Clock />
         </p>
         <div className="flex gap-5 sm:justify-end">
           <a
@@ -30,7 +31,7 @@ export default function Footer() {
             LinkedIn
           </a>
           <a href="#home" className="u-link hover:text-ink">
-            Haut ↑
+            {t.top}
           </a>
         </div>
       </div>

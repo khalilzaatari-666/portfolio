@@ -1,18 +1,21 @@
-import { about } from "@/data/content";
+import { content, type Lang } from "@/data/content";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
-export default function About() {
+export default function About({ lang }: { lang: Lang }) {
+  const { about } = content[lang];
   const [lead, ...rest] = about.paragraphs;
 
   return (
     <section id="about" className="mx-auto max-w-6xl px-6 py-28">
       <SectionHeading
         number="01"
-        eyebrow="À propos"
+        eyebrow={about.eyebrow}
         title={
           <>
-            Ingénieur, développeur, <em>data scientist</em>.
+            {about.title[0]}
+            <em>{about.title[1]}</em>
+            {about.title[2]}
           </>
         }
       />

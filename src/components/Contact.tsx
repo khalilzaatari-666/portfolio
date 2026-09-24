@@ -1,36 +1,37 @@
-import { profile } from "@/data/content";
+import { content, profile, type Lang } from "@/data/content";
 import Reveal from "./Reveal";
 import { ArrowUpRight } from "./icons";
 
-const channels = [
-  { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
-  {
-    label: "Téléphone",
-    value: profile.phone,
-    href: `tel:${profile.phone.replace(/\s/g, "")}`,
-  },
-  { label: "LinkedIn", value: "in/khalil-zaatari", href: profile.linkedin },
-  { label: "GitHub", value: "khalilzaatari-666", href: profile.github },
-];
+export default function Contact({ lang }: { lang: Lang }) {
+  const t = content[lang].contact;
+  const channels = [
+    { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+    {
+      label: t.phone,
+      value: profile.phone,
+      href: `tel:${profile.phone.replace(/\s/g, "")}`,
+    },
+    { label: "LinkedIn", value: "in/khalil-zaatari", href: profile.linkedin },
+    { label: "GitHub", value: "khalilzaatari-666", href: profile.github },
+  ];
 
-export default function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-6 py-28">
-      <Reveal className="rule-strong grid gap-10 pt-6 md:grid-cols-[120px_1fr]">
+      <Reveal className="rule-draw grid gap-10 pt-6 md:grid-cols-[120px_1fr]">
         <div className="flex items-baseline gap-3 md:block">
           <span className="font-serif text-4xl leading-none text-accent">05</span>
-          <span className="label md:mt-3 md:block">Contact</span>
+          <span className="label md:mt-3 md:block">{t.eyebrow}</span>
         </div>
 
         <div>
           <h2 className="display text-[clamp(2.6rem,7vw,5.5rem)] text-ink">
-            Travaillons
+            {t.title[0]}
             <br />
-            <em>ensemble</em>.
+            <em>{t.title[1]}</em>
+            {t.title[2]}
           </h2>
           <p className="mt-6 max-w-lg text-base leading-relaxed text-muted">
-            Un projet, un poste ou une simple question&nbsp;? Écrivez-moi, je
-            réponds rapidement.
+            {t.intro}
           </p>
 
           {/* L'adresse email, en très grand, est le vrai bouton */}

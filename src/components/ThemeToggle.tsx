@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { SunIcon, MoonIcon } from "./icons";
+import type { Content } from "@/data/content";
 
 type Theme = "light" | "dark";
 
@@ -11,7 +12,13 @@ function getSystemTheme(): Theme {
     : "light";
 }
 
-export default function ThemeToggle({ className = "" }: { className?: string }) {
+export default function ThemeToggle({
+  labels,
+  className = "",
+}: {
+  labels: Content["nav"]["theme"];
+  className?: string;
+}) {
   // null tant que le thème n'est pas connu côté client (évite un mismatch SSR)
   const [theme, setTheme] = useState<Theme | null>(null);
 
@@ -20,13 +27,27 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     setTheme(saved ?? getSystemTheme());
   }, []);
 
-  const toggle = () => {
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
     const next: Theme = theme === "dark" ? "light" : "dark";
-    document.documentElement.dataset.theme = next;
-    try {
-      localStorage.setItem("theme", next);
-    } catch {}
+    const apply = () => {
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem("theme", next);
+      } catch {}
+    };
     setTheme(next);
+
+    // L'encre se répand depuis le bouton (View Transitions) ; sinon, simple fondu.
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => unknown;
+    };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!doc.startViewTransition || reduce) return apply();
+    const r = e.currentTarget.getBoundingClientRect();
+    const root = document.documentElement.style;
+    root.setProperty("--vt-x", `${r.left + r.width / 2}px`);
+    root.setProperty("--vt-y", `${r.top + r.height / 2}px`);
+    doc.startViewTransition(apply);
   };
 
   const isDark = theme === "dark";
@@ -35,8 +56,8 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     <button
       type="button"
       onClick={toggle}
-      aria-label={isDark ? "Passer au thème clair" : "Passer au thème sombre"}
-      title={isDark ? "Thème clair" : "Thème sombre"}
+      aria-label={isDark ? labels.toLight : labels.toDark}
+      title={isDark ? labels.light : labels.dark}
       className={`flex h-10 w-10 items-center justify-center rounded-full border border-line text-muted transition-colors hover:border-line-strong hover:text-ink ${className}`}
     >
       <span className="relative flex h-[18px] w-[18px] items-center justify-center">

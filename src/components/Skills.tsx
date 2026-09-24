@@ -1,21 +1,24 @@
-import { skills } from "@/data/content";
+import { content, type Lang } from "@/data/content";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 // Compétences présentées comme un index : catégorie à gauche, liste en ligne.
-export default function Skills() {
+export default function Skills({ lang }: { lang: Lang }) {
+  const { skills, skillsSection: t } = content[lang];
   return (
     <section id="skills" className="border-y border-line bg-surface">
       <div className="mx-auto max-w-6xl px-6 py-28">
         <SectionHeading
           number="02"
-          eyebrow="Compétences"
+          eyebrow={t.eyebrow}
           title={
             <>
-              Une stack full-stack, <em>ancrée dans la data</em>.
+              {t.title[0]}
+              <em>{t.title[1]}</em>
+              {t.title[2]}
             </>
           }
-          description="Du front-end au déploiement, en passant par l'ingénierie et la science des données."
+          description={t.description}
         />
 
         <ol className="border-t border-line">

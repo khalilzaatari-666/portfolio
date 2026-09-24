@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
-import { profile } from "@/data/content";
+import { profile, content, langs, type Lang } from "@/data/content";
 
-export const alt = `${profile.name} — ${profile.role}`;
+export const alt = `${profile.name} — ${content.fr.role}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -19,8 +19,17 @@ async function loadFont(family: string, text: string) {
   return (await fetch(url)).arrayBuffer();
 }
 
-export default async function OpenGraphImage() {
-  const text = `${profile.name}${profile.role}Portfolio${profile.location}khalilzaatari.com`;
+export function generateStaticParams() {
+  return langs.map((lang) => ({ lang }));
+}
+
+export default async function OpenGraphImage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { role, location } = content[(await params).lang as Lang];
+  const text = `${profile.name}${role}Portfolio${location}khalilzaatari.com`;
   const serif = await loadFont("Instrument+Serif", text);
 
   return new ImageResponse(
@@ -82,7 +91,7 @@ export default async function OpenGraphImage() {
           >
             {profile.name}
           </div>
-          <div style={{ fontSize: 34, color: "#625d52" }}>{profile.role}</div>
+          <div style={{ fontSize: 34, color: "#625d52" }}>{role}</div>
         </div>
 
         <div
@@ -93,7 +102,7 @@ export default async function OpenGraphImage() {
             color: "#9a9488",
           }}
         >
-          <span>{profile.location}</span>
+          <span>{location}</span>
           <span>khalilzaatari.com</span>
         </div>
       </div>

@@ -1,19 +1,23 @@
-import { experience, education, certifications } from "@/data/content";
+import { content, type Lang } from "@/data/content";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { ArrowUpRight } from "./icons";
 
 // Parcours présenté comme un registre : période à gauche, détail à droite.
-export default function Experience() {
+export default function Experience({ lang }: { lang: Lang }) {
+  const { experience, education, certifications, experienceSection: t } =
+    content[lang];
   return (
     <section id="experience" className="border-y border-line bg-surface">
       <div className="mx-auto max-w-6xl px-6 py-28">
         <SectionHeading
           number="04"
-          eyebrow="Parcours"
+          eyebrow={t.eyebrow}
           title={
             <>
-              Expérience &amp; <em>formation</em>.
+              {t.title[0]}
+              <em>{t.title[1]}</em>
+              {t.title[2]}
             </>
           }
         />
@@ -37,7 +41,7 @@ export default function Experience() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Site de ${item.company}`}
+                      aria-label={`${t.site} ${item.company}`}
                       className="ml-1.5 inline-flex translate-y-0.5 text-faint transition-colors hover:text-accent"
                     >
                       <ArrowUpRight width={14} height={14} />
@@ -66,7 +70,7 @@ export default function Experience() {
           <div className="hidden md:block" />
 
           <Reveal>
-            <p className="label mb-5">Formation</p>
+            <p className="label mb-5">{t.education}</p>
             <p className="font-serif text-2xl leading-tight text-ink">
               {education.school}
             </p>
@@ -77,7 +81,7 @@ export default function Experience() {
           </Reveal>
 
           <Reveal delay={100} className="md:col-start-2 lg:col-start-3">
-            <p className="label mb-5">Certifications</p>
+            <p className="label mb-5">{t.certifications}</p>
             <ol className="divide-y divide-line border-y border-line">
               {certifications.map((c, i) => (
                 <li

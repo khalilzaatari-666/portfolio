@@ -3,16 +3,16 @@
 import { useEffect, useState } from "react";
 import { MenuIcon, CloseIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
+import type { Content, Lang } from "@/data/content";
 
-const links = [
-  { href: "#about", n: "01", label: "À propos" },
-  { href: "#skills", n: "02", label: "Compétences" },
-  { href: "#projects", n: "03", label: "Projets" },
-  { href: "#experience", n: "04", label: "Parcours" },
-  { href: "#contact", n: "05", label: "Contact" },
-];
-
-export default function Nav() {
+export default function Nav({
+  lang,
+  t,
+}: {
+  lang: Lang;
+  t: Content["nav"];
+}) {
+  const { links } = t;
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>("");
@@ -39,7 +39,7 @@ export default function Nav() {
     );
     sections.forEach((s) => observer.observe(s));
     return () => observer.disconnect();
-  }, []);
+  }, [links]);
 
   return (
     <header
@@ -52,7 +52,7 @@ export default function Nav() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="#home" className="font-serif text-2xl leading-none text-ink">
           K<span className="italic text-accent">Z</span>
-          <span className="sr-only">Khalil Zaatari — accueil</span>
+          <span className="sr-only">{t.home}</span>
         </a>
 
         <ul className="hidden items-center gap-7 md:flex">
@@ -61,7 +61,9 @@ export default function Nav() {
               <a
                 href={l.href}
                 className={`u-link inline-flex items-baseline gap-1.5 text-sm transition-colors ${
-                  active === l.href ? "text-ink" : "text-muted hover:text-ink"
+                  active === l.href
+                    ? "is-active text-ink"
+                    : "text-muted hover:text-ink"
                 }`}
               >
                 <span className="font-mono text-[0.65rem] text-faint">
@@ -74,10 +76,36 @@ export default function Nav() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle />
+          {/* Langue courante en évidence, l'autre à côté, atténuée */}
+          <div className="flex h-10 items-center gap-1 rounded-full border border-line px-3 font-mono text-xs uppercase">
+            {(["fr", "en"] as const).map((l, i) => (
+              <span key={l} className="flex items-center gap-1">
+                {i > 0 && <span className="text-faint">/</span>}
+                {l === lang ? (
+                  <span aria-current="true" className="text-accent">
+                    {l}
+                  </span>
+                ) : (
+                  <a
+                    href={l === "fr" ? "/" : `/${l}`}
+                    hrefLang={l}
+                    lang={l}
+                    aria-label={t.switchLang}
+                    title={t.switchLang}
+                    className="text-faint transition-colors hover:text-ink"
+                  >
+                    {l}
+                  </a>
+                )}
+              </span>
+            ))}
+          </div>
+          <ThemeToggle labels={t.theme} />
           <button
             type="button"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+            aria-label={open ? t.closeMenu : t.openMenu}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
             onClick={() => setOpen((v) => !v)}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink md:hidden"
           >
@@ -90,11 +118,19 @@ export default function Nav() {
         </div>
       </nav>
 
-      {open && (
-        <div className="border-t border-line bg-bg md:hidden">
+      <div
+        id="mobile-menu"
+        inert={!open}
+        className={`menu bg-bg md:hidden ${open ? "is-open border-t border-line" : ""}`}
+      >
+        <div>
           <ul className="mx-auto max-w-6xl px-6 py-3">
-            {links.map((l) => (
-              <li key={l.href} className="border-b border-line last:border-0">
+            {links.map((l, i) => (
+              <li
+                key={l.href}
+                style={{ "--i": i } as React.CSSProperties}
+                className="border-b border-line last:border-0"
+              >
                 <a
                   href={l.href}
                   onClick={() => setOpen(false)}
@@ -107,7 +143,7 @@ export default function Nav() {
             ))}
           </ul>
         </div>
-      )}
+      </div>
     </header>
   );
 }

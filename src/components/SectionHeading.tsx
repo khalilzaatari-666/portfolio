@@ -13,7 +13,7 @@ export default function SectionHeading({
   description?: string;
 }) {
   return (
-    <Reveal className="rule-strong mb-14 grid gap-6 pt-6 md:grid-cols-[120px_1fr]">
+    <Reveal className="rule-draw mb-14 grid gap-6 pt-6 md:grid-cols-[120px_1fr]">
       <div className="flex items-baseline gap-3 md:block">
         <span className="font-serif text-4xl leading-none text-accent">
           {number}
