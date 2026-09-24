@@ -57,3 +57,31 @@ redéploie. Le domaine est branché via Cloudflare (CNAME, mode « DNS only »).
 Si tu forkes ce dépôt pour faire ton propre portfolio : change `siteUrl` dans
 `src/app/layout.tsx`, remplace `content.ts`, les images et les CV, et c'est
 tout.
+
+## Statistiques de visite
+
+Chaque visite ajoute une ligne (date, ville, pays, durée en secondes, langue)
+dans une Google Sheet. Rien à installer : `VisitTracker` envoie un beacon à
+`/api/visit`, qui lit la localisation dans les en-têtes Vercel et transmet à un
+script Google Apps Script. Pas de cookie, aucune IP stockée.
+
+Mise en place (une fois) :
+
+1. Crée une Google Sheet, puis **Extensions → Apps Script**, et colle :
+
+   ```js
+   function doPost(e) {
+     const d = JSON.parse(e.postData.contents);
+     SpreadsheetApp.getActiveSheet().appendRow([
+       new Date(), d.city, d.country, d.duration, d.lang,
+     ]);
+     return ContentService.createTextOutput("ok");
+   }
+   ```
+
+2. **Déployer → Nouveau déploiement → Application Web**, exécuter en tant que
+   « Moi », accès « Tout le monde ». Copie l'URL `.../exec`.
+3. Sur Vercel : **Settings → Environment Variables**, ajoute
+   `VISITS_WEBHOOK_URL` = cette URL, puis redéploie.
+
+Sans cette variable (en local par exemple), l'API ne fait rien.

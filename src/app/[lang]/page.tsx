@@ -7,6 +7,7 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import WhatsappButton from "@/components/WhatsappButton";
+import VisitTracker from "@/components/VisitTracker";
 import { content, type Lang } from "@/data/content";
 
 export default async function Home({
@@ -28,6 +29,7 @@ export default async function Home({
       </main>
       <Footer lang={lang} />
       <WhatsappButton lang={lang} />
+      <VisitTracker lang={lang} />
     </>
   );
 }
