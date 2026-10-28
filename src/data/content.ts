@@ -227,7 +227,6 @@ const fr = {
       tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
       year: "2025–26",
       image: "/images/capitol.png",
-      liveUrl: "https://capitol.ma",
       repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
     },
     {
@@ -266,7 +265,6 @@ const fr = {
       company: "Capitol.ma",
       role: "Développeur Full Stack",
       period: "Oct 2025 à Août 2026",
-      url: "https://capitol.ma",
       bullets: [
         "Développement et maintenance de capitol.ma, plateforme d'investissement pour le marché marocain, en TypeScript full-stack.",
         "Back-end Node.js/Express avec Prisma & PostgreSQL : authentification complète, contrôle d'accès par rôles, rate limiting via Redis et validation/sanitisation des entrées.",
@@ -496,7 +494,6 @@ const en: Content = {
       tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
       year: "2025–26",
       image: "/images/capitol.png",
-      liveUrl: "https://capitol.ma",
       repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
     },
     {
@@ -535,7 +532,6 @@ const en: Content = {
       company: "Capitol.ma",
       role: "Full Stack Developer",
       period: "Oct 2025 – Aug 2026",
-      url: "https://capitol.ma",
       bullets: [
         "Developed and maintained capitol.ma, an investment platform for the Moroccan market, in full-stack TypeScript.",
         "Node.js/Express back end with Prisma & PostgreSQL: full authentication, role-based access control, Redis rate limiting and input validation/sanitization.",
