@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { MenuIcon, CloseIcon } from "./icons";
 import ThemeToggle from "./ThemeToggle";
-import type { Content, Lang } from "@/data/content";
+import { langNames, langPath, langs, type Content, type Lang } from "@/data/content";
 
 export default function Nav({
   lang,
@@ -78,23 +78,27 @@ export default function Nav({
         <div className="flex items-center gap-2">
           {/* Langue courante en évidence, l'autre à côté, atténuée */}
           <div className="flex h-10 items-center gap-1 rounded-full border border-line px-3 font-mono text-xs uppercase">
-            {(["fr", "en"] as const).map((l, i) => (
+            {langs.map((l, i) => (
               <span key={l} className="flex items-center gap-1">
                 {i > 0 && <span className="text-faint">/</span>}
                 {l === lang ? (
-                  <span aria-current="true" className="text-accent">
-                    {l}
+                  <span
+                    aria-current="true"
+                    title={langNames[l].name}
+                    className="text-accent"
+                  >
+                    {langNames[l].short}
                   </span>
                 ) : (
                   <a
-                    href={l === "fr" ? "/" : `/${l}`}
+                    href={langPath(l)}
                     hrefLang={l}
                     lang={l}
-                    aria-label={t.switchLang}
-                    title={t.switchLang}
+                    aria-label={langNames[l].name}
+                    title={langNames[l].name}
                     className="text-faint transition-colors hover:text-ink"
                   >
-                    {l}
+                    {langNames[l].short}
                   </a>
                 )}
               </span>

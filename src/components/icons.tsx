@@ -51,8 +51,9 @@ export const DownloadIcon = (p: IconProps) => (
   </svg>
 );
 
-export const ArrowUpRight = (p: IconProps) => (
-  <svg {...base} {...p}>
+// En arabe, la flèche pointe vers le haut à gauche (sens de lecture)
+export const ArrowUpRight = ({ className = "", ...p }: IconProps) => (
+  <svg {...base} {...p} className={`rtl:-scale-x-100 ${className}`}>
     <path d="M7 17 17 7" />
     <path d="M7 7h10v10" />
   </svg>

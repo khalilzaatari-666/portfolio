@@ -42,7 +42,7 @@ export default function Experience({ lang }: { lang: Lang }) {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${t.site} ${item.company}`}
-                      className="ml-1.5 inline-flex translate-y-0.5 text-faint transition-colors hover:text-accent"
+                      className="ms-1.5 inline-flex translate-y-0.5 text-faint transition-colors hover:text-accent"
                     >
                       <ArrowUpRight width={14} height={14} />
                     </a>
@@ -56,7 +56,7 @@ export default function Experience({ lang }: { lang: Lang }) {
                 {item.bullets.map((b, bi) => (
                   <li
                     key={bi}
-                    className="relative pl-4 text-sm leading-relaxed text-muted before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2 before:bg-faint"
+                    className="relative ps-4 text-sm leading-relaxed text-muted before:absolute before:start-0 before:top-[0.7em] before:h-px before:w-2 before:bg-faint"
                   >
                     {b}
                   </li>

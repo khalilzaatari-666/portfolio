@@ -28,7 +28,9 @@ export default async function OpenGraphImage({
 }: {
   params: Promise<{ lang: string }>;
 }) {
-  const { role, location } = content[(await params).lang as Lang];
+  // Satori ne gère pas l'écriture de droite à gauche : l'arabe reprend la carte anglaise
+  const lang = (await params).lang as Lang;
+  const { role, location } = content[lang === "ar" ? "en" : lang];
   const text = `${profile.name}${role}Portfolio${location}khalilzaatari.com`;
   const serif = await loadFont("Instrument+Serif", text);
 

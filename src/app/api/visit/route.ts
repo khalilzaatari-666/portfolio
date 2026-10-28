@@ -1,5 +1,7 @@
 // Reçoit le beacon de VisitTracker et ajoute une ligne dans la Google Sheet
 // (voir README, section « Statistiques de visite »).
+import { langs, type Lang } from "@/data/content";
+
 export async function POST(req: Request) {
   const url = process.env.VISITS_WEBHOOK_URL;
   if (!url) return new Response(null, { status: 204 });
@@ -28,7 +30,7 @@ export async function POST(req: Request) {
       city,
       country,
       duration: Math.min(Math.round(duration), 86_400),
-      lang: body.lang === "en" ? "en" : "fr",
+      lang: langs.includes(body.lang as Lang) ? body.lang : "fr",
     }),
     // Apps Script répond par une redirection une fois la ligne écrite : inutile de la suivre
     redirect: "manual",

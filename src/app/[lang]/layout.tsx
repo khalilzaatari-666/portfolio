@@ -1,18 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
-import { content, langs, type Lang } from "@/data/content";
+import {
+  Geist,
+  Geist_Mono,
+  IBM_Plex_Sans_Arabic,
+  Instrument_Serif,
+  Aref_Ruqaa,
+} from "next/font/google";
+import { content, langPath, langs, type Lang } from "@/data/content";
 import "../globals.css";
 
+// Pas de police de secours générée (Arial, Times New Roman) pour les polices
+// latines : elles contiennent aussi de l'arabe et masqueraient les polices
+// arabes placées juste après dans globals.css.
 const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-geist-sans",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const geistMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-geist-mono",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -21,9 +32,39 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
   variable: "--font-instrument-serif",
   display: "swap",
+  adjustFontFallback: false,
 });
 
-const siteUrl = "https://khalilzaatari.com";
+// Polices arabes, placées en secours derrière les polices latines (voir
+// globals.css) : les noms latins gardent Geist / Instrument Serif. Limitées au
+// sous-ensemble arabe, elles ne sont téléchargées que si la page en contient.
+const arabicSans = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500"],
+  variable: "--font-arabic-sans",
+  display: "swap",
+  preload: false,
+});
+
+const arabicDisplay = Aref_Ruqaa({
+  subsets: ["arabic"],
+  weight: "400",
+  variable: "--font-arabic-display",
+  display: "swap",
+  preload: false,
+});
+
+const fontVariables = [
+  geistSans,
+  geistMono,
+  instrumentSerif,
+  arabicSans,
+  arabicDisplay,
+]
+  .map((f) => f.variable)
+  .join(" ");
+
+const siteUrl ="https://khalilzaatari.com";
 
 export function generateStaticParams() {
   return langs.map((lang) => ({ lang }));
@@ -38,29 +79,21 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const lang = (await params).lang as Lang;
   const { meta } = content[lang];
-  const url = lang === "fr" ? "/" : `/${lang}`;
+  const url = langPath(lang);
   return {
     metadataBase: new URL(siteUrl),
     title: meta.title,
     description: meta.description,
-    keywords: [
-      "Khalil Zaatari",
-      lang === "fr" ? "développeur full stack" : "full stack developer",
-      "React",
-      "Next.js",
-      "Node.js",
-      "data science",
-      "machine learning",
-      "Agadir",
-      lang === "fr" ? "Maroc" : "Morocco",
-      "portfolio",
-    ],
+    keywords: meta.keywords,
     authors: [{ name: "Khalil Zaatari" }],
     creator: "Khalil Zaatari",
-    alternates: { canonical: url, languages: { fr: "/", en: "/en" } },
+    alternates: {
+      canonical: url,
+      languages: Object.fromEntries(langs.map((l) => [l, langPath(l)])),
+    },
     openGraph: {
       type: "website",
-      locale: lang === "fr" ? "fr_FR" : "en_US",
+      locale: meta.locale,
       url,
       title: meta.title,
       description: meta.ogDescription,
@@ -98,7 +131,8 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable}`}
+      dir={lang === "ar" ? "rtl" : "ltr"}
+      className={fontVariables}
       suppressHydrationWarning
     >
       <head>

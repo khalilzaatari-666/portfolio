@@ -4,8 +4,18 @@
 // Le texte existe en deux langues (fr / en) : garde les deux objets en phase.
 // -----------------------------------------------------------------------------
 
-export const langs = ["fr", "en"] as const;
+export const langs = ["fr", "en", "ar"] as const;
 export type Lang = (typeof langs)[number];
+
+// Le français est servi sur « / », les autres langues sur « /<code> ».
+export const langPath = (lang: Lang) => (lang === "fr" ? "/" : `/${lang}`);
+
+// Sélecteur de langue : libellé court affiché, nom complet pour l'accessibilité
+export const langNames: Record<Lang, { short: string; name: string }> = {
+  fr: { short: "FR", name: "Français" },
+  en: { short: "EN", name: "English" },
+  ar: { short: "ع", name: "العربية" },
+};
 
 // Données identiques dans les deux langues
 export const profile = {
@@ -71,6 +81,19 @@ const fr = {
       "Portfolio de Khalil Zaatari, ingénieur d'État en informatique (ENSA El Jadida). Développeur full stack React / Next.js / Node.js et spécialiste en science des données, basé à Agadir, Maroc.",
     ogDescription:
       "Ingénieur d'État en informatique. Développeur full stack et spécialiste en science des données. Basé à Agadir, Maroc.",
+    keywords: [
+      "Khalil Zaatari",
+      "développeur full stack",
+      "React",
+      "Next.js",
+      "Node.js",
+      "data science",
+      "machine learning",
+      "Agadir",
+      "Maroc",
+      "portfolio",
+    ],
+    locale: "fr_FR",
   },
   role: "Développeur Full Stack & Data Science",
   location: "Agadir, Maroc",
@@ -88,7 +111,6 @@ const fr = {
     home: "Khalil Zaatari — accueil",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
-    switchLang: "Switch to English",
     theme: {
       toLight: "Passer au thème clair",
       toDark: "Passer au thème sombre",
@@ -319,6 +341,7 @@ const fr = {
     title: ["Travaillons", "ensemble", "."],
     intro:
       "Un projet, un poste ou une simple question ? Écrivez-moi, je réponds rapidement.",
+    email: "Email",
     phone: "Téléphone",
   },
 
@@ -339,6 +362,19 @@ const en: Content = {
       "Portfolio of Khalil Zaatari, state-certified computer engineer (ENSA El Jadida). Full stack developer (React / Next.js / Node.js) and data science specialist, based in Agadir, Morocco.",
     ogDescription:
       "State-certified computer engineer. Full stack developer and data science specialist. Based in Agadir, Morocco.",
+    keywords: [
+      "Khalil Zaatari",
+      "full stack developer",
+      "React",
+      "Next.js",
+      "Node.js",
+      "data science",
+      "machine learning",
+      "Agadir",
+      "Morocco",
+      "portfolio",
+    ],
+    locale: "en_US",
   },
   role: "Full Stack Developer & Data Science",
   location: "Agadir, Morocco",
@@ -356,7 +392,6 @@ const en: Content = {
     home: "Khalil Zaatari — home",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    switchLang: "Passer en français",
     theme: {
       toLight: "Switch to light theme",
       toDark: "Switch to dark theme",
@@ -585,6 +620,7 @@ const en: Content = {
     eyebrow: "Contact",
     title: ["Let's work", "together", "."],
     intro: "A project, a role or just a question? Write to me, I reply quickly.",
+    email: "Email",
     phone: "Phone",
   },
 
@@ -596,4 +632,285 @@ const en: Content = {
   whatsapp: "Chat on WhatsApp",
 };
 
-export const content: Record<Lang, Content> = { fr, en };
+const ar: Content = {
+  meta: {
+    title: "Khalil Zaatari | مطوّر مواقع وتطبيقات ويب وخبير بيانات",
+    description:
+      "Khalil Zaatari، مهندس دولة في المعلوميات مقيم في أكادير، المغرب. أصمّم وأطوّر مواقع وتطبيقات ويب كاملة، وأساعد الشركات على الاستفادة من بياناتها ومن الذكاء الاصطناعي.",
+    ogDescription:
+      "مهندس دولة في المعلوميات. أصمّم وأطوّر مواقع وتطبيقات ويب كاملة، وأحوّل البيانات إلى قرارات. مقيم في أكادير، المغرب.",
+    keywords: [
+      "Khalil Zaatari",
+      "تصميم مواقع",
+      "تطوير تطبيقات الويب",
+      "مطوّر مواقع",
+      "تحليل البيانات",
+      "الذكاء الاصطناعي",
+      "React",
+      "Next.js",
+      "أكادير",
+      "المغرب",
+      "portfolio",
+    ],
+    locale: "ar_MA",
+  },
+  role: "مطوّر مواقع وتطبيقات ويب وخبير بيانات",
+  location: "أكادير، المغرب",
+  tagline:
+    "مهندس دولة في المعلوميات، أصمّم وأطوّر مواقع وتطبيقات ويب كاملة: من الواجهة التي يراها زوّارك، إلى النظام الذي يعمل خلفها، وحتى إطلاقها على الإنترنت. وبفضل تخصصي في البيانات والذكاء الاصطناعي، أساعدك أيضًا على فهم بياناتك والاستفادة منها.",
+
+  nav: {
+    links: [
+      { href: "#about", n: "01", label: "من أنا" },
+      { href: "#skills", n: "02", label: "المهارات" },
+      { href: "#projects", n: "03", label: "المشاريع" },
+      { href: "#experience", n: "04", label: "الخبرات" },
+      { href: "#contact", n: "05", label: "تواصل" },
+    ],
+    home: "Khalil Zaatari — الصفحة الرئيسية",
+    openMenu: "فتح القائمة",
+    closeMenu: "إغلاق القائمة",
+    theme: {
+      toLight: "التبديل إلى الوضع الفاتح",
+      toDark: "التبديل إلى الوضع الداكن",
+      light: "الوضع الفاتح",
+      dark: "الوضع الداكن",
+    },
+  },
+
+  hero: {
+    kicker: "معرض أعمال — 2026",
+    available: "متاح لمشاريع جديدة",
+    // « أصمّم مواقع وتطبيقات الويب، وأحوّل البيانات إلى قرارات. »
+    headline: ["أصمّم ", "مواقع وتطبيقات الويب", "،", " وأحوّل ", "البيانات", " إلى قرارات."],
+    portraitAlt: "صورة Khalil Zaatari",
+    portrait: "صورة",
+    place: "أكادير، المغرب",
+    seeProjects: "شاهد أعمالي",
+    meta: {
+      location: "المدينة",
+      time: "الساعة هنا",
+      education: "الشهادة",
+      educationValue: "مهندس دولة، ENSA",
+      contact: "البريد",
+    },
+  },
+
+  about: {
+    eyebrow: "من أنا",
+    title: ["مهندس، مطوّر، ", "وخبير بيانات", "."],
+    paragraphs: [
+      "تخرّجت مهندسَ دولة في المعلوميات من المدرسة الوطنية للعلوم التطبيقية بالجديدة (ENSA). أبني مواقع وتطبيقات ويب كاملة بنفسي: من تصميم الواجهة التي يستعملها عملاؤك، إلى البرمجة التي تعمل في الخلفية، وصولًا إلى إطلاق الموقع على الإنترنت ومتابعته بعد ذلك.",
+      "تخصصي الثاني هو البيانات: أجمعها وأنظّمها، ثم أحوّلها إلى لوحات ورسوم واضحة، وإلى أدوات ذكاء اصطناعي تساعد على اتخاذ القرار. أحرص على أن يكون ما أبنيه سريعًا وآمنًا وقادرًا على النمو مع نشاطك، وأعمل باستقلالية أو ضمن فريق، مع تواصل واضح في كل مرحلة.",
+    ],
+    facts: [
+      { label: "أقيم في", value: "أكادير، المغرب" },
+      { label: "الشهادة", value: "مهندس دولة، ENSA الجديدة" },
+      { label: "اللغات", value: "العربية، الفرنسية، الإنجليزية" },
+      { label: "التوفّر", value: "متاح لمشاريع ووظائف جديدة" },
+    ],
+  },
+
+  skillsSection: {
+    eyebrow: "المهارات",
+    title: ["كل ما يحتاجه مشروعك، ", "من الفكرة إلى الإطلاق", "."],
+    description:
+      "الأدوات التي أستعملها يوميًا لبناء مواقع سريعة وآمنة، ولتحليل البيانات والاستفادة منها.",
+  },
+  skills: [
+    {
+      title: "واجهات المواقع",
+      items: [
+        "React (React 19)",
+        "Next.js",
+        "TypeScript",
+        "JavaScript",
+        "Tailwind CSS",
+        "Radix UI / shadcn/ui",
+        "HTML5 / CSS3",
+        "تصميم يتكيّف مع الهاتف والحاسوب",
+      ],
+    },
+    {
+      title: "البرمجة الخلفية",
+      items: [
+        "Node.js / Express",
+        "FastAPI",
+        "Django",
+        "Prisma (ORM)",
+        "REST / GraphQL API",
+        "Redis",
+        "ربط المواقع بالذكاء الاصطناعي (OpenAI)",
+      ],
+    },
+    {
+      title: "البيانات والذكاء الاصطناعي",
+      items: [
+        "Python / R",
+        "Pandas / NumPy",
+        "Scikit-learn / Keras",
+        "TensorFlow / PyTorch",
+        "التعرّف على الصور والوجوه (YOLOv8, Siamese NN)",
+        "MLflow",
+      ],
+    },
+    {
+      title: "البيانات الضخمة",
+      items: ["Apache Spark", "Hadoop", "Kafka", "HBase", "Airflow", "Apache Beam"],
+    },
+    {
+      title: "قواعد البيانات",
+      items: ["PostgreSQL", "MySQL", "MongoDB", "HBase"],
+    },
+    {
+      title: "الاستضافة والنشر",
+      items: [
+        "Git",
+        "Docker / Kubernetes",
+        "GitHub Actions (CI/CD)",
+        "Fly.io / Vercel",
+        "AWS (S3, Lambda)",
+        "Nginx / Linux",
+      ],
+    },
+    {
+      title: "الأمان",
+      items: [
+        "تسجيل دخول آمن وصلاحيات (JWT, OAuth, RBAC)",
+        "الحماية من الهجمات والروبوتات",
+        "التحقق من البيانات المُدخلة",
+        "الدخول بالبصمة أو الوجه",
+      ],
+    },
+    {
+      title: "لوحات ورسوم البيانات",
+      items: ["Power BI", "Tableau", "Matplotlib", "Seaborn"],
+    },
+  ],
+
+  projectsSection: {
+    eyebrow: "المشاريع",
+    title: ["منصّتان ", "تعملان اليوم", "."],
+    description:
+      "صمّمتهما وبنيتهما وأطلقتهما بالكامل، ويستعملهما العملاء حاليًا.",
+    open: "فتح",
+    screenshot: "صورة من موقع",
+    project: "مشروع",
+    stack: "التقنيات المستعملة",
+    live: "زيارة الموقع",
+    code: "الكود المصدري",
+  },
+  projects: [
+    {
+      name: "Capitol.ma",
+      tagline: "منصة للاستثمار في المغرب",
+      description:
+        "منصة تتيح الاستثمار في العقار والفن والشركات غير المدرجة في البورصة. بنيتها بالكامل: لوحات تحكم تعرض الاستثمارات بالأرقام والرسوم، تسجيل دخول آمن بالبريد الإلكتروني أو بحساب Google، صلاحيات مختلفة لكل نوع من المستخدمين، وحماية من محاولات الاختراق والروبوتات. كما ربطتها بخدمات مثل WhatsApp والرسائل النصية وحجز المواعيد والذكاء الاصطناعي، وأتولّى نشر تحديثاتها بشكل آلي.",
+      tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
+      year: "2025–26",
+      image: "/images/capitol.png",
+      liveUrl: "https://capitol.ma",
+      repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
+    },
+    {
+      name: "Horkos WM",
+      tagline: "منصة لمكتب استشارات في إدارة الثروات",
+      description:
+        "المنصة الرقمية لمكتب Horkos Wealth Management، وهو مكتب للاستشارات في الاستثمار المالي معتمد لدى الهيئة المغربية لسوق الرساميل (AMMC). تضم موقعًا تعريفيًا للعموم، وفضاءً خاصًا يتابع فيه كل عميل ملفه ووثائقه، ولوحة إدارة للمستشارين. من مميزاتها: دخول آمن برمز يصل عبر البريد أو بحساب Google أو Microsoft، إنشاء وثائق PDF تلقائيًا، حجز المواعيد مباشرة في الأجندة، رسائل بريد آلية، وحماية متقدمة ضد الهجمات.",
+      tags: ["Next.js 16", "React 19", "Supabase", "Tailwind v4", "Vercel", "Cloudflare"],
+      year: "2026",
+      image: "/images/horkos.png",
+      liveUrl: "https://horkos-wm.com",
+      repoUrl: "https://github.com/khalilzaatari-666/horkos-wm",
+    },
+  ],
+
+  experienceSection: {
+    eyebrow: "الخبرات",
+    title: ["الخبرة و", "التكوين", "."],
+    site: "موقع",
+    education: "التكوين",
+    certifications: "الشهادات",
+  },
+  experience: [
+    {
+      company: "Horkos WM",
+      role: "مطوّر مواقع وتطبيقات ويب",
+      period: "يونيو 2026 – أغسطس 2026",
+      url: "https://horkos-wm.com",
+      bullets: [
+        "بناء المنصة الرقمية لمكتب Horkos Wealth Management (استشارات في الاستثمار المالي، معتمد لدى AMMC): موقع تعريفي، فضاء خاص بالعملاء، ولوحة إدارة.",
+        "تطوير خصائص تسهّل عمل المكتب يوميًا: دخول آمن، إنشاء وثائق PDF تلقائيًا، حجز المواعيد، ورسائل بريد آلية.",
+        "إطلاق المنصة على الإنترنت مع حماية متقدمة ضد الهجمات، واختبارات آلية تتأكد من أن كل شيء يعمل بعد كل تحديث.",
+      ],
+    },
+    {
+      company: "Capitol.ma",
+      role: "مطوّر مواقع وتطبيقات ويب",
+      period: "أكتوبر 2025 – أغسطس 2026",
+      url: "https://capitol.ma",
+      bullets: [
+        "تطوير وصيانة capitol.ma، منصة للاستثمار موجّهة للسوق المغربية.",
+        "بناء النظام الذي يعمل خلف المنصة: حسابات المستخدمين، الصلاحيات، حماية البيانات، ومنع الاستعمال المفرط أو المشبوه.",
+        "ربط المنصة بخدمات خارجية (WhatsApp، الرسائل النصية، حجز المواعيد، الذكاء الاصطناعي، تخزين الملفات) وأتمتة نشر التحديثات.",
+      ],
+    },
+    {
+      company: "PCS Agri",
+      role: "مهندس ذكاء اصطناعي ومطوّر ويب",
+      period: "مارس 2025 – يونيو 2025",
+      bullets: [
+        "منصة ويب لتدريب نماذج ذكاء اصطناعي تتعرّف على العناصر في الصور، موجّهة للمجال الفلاحي.",
+        "أداة لتنظيم الصور ووضع العلامات عليها يدويًا وتلقائيًا، حتى يتعلّم منها النموذج.",
+        "أتمتة الدورة كاملة: تدريب النماذج، تقييمها، اختبارها، ثم تشغيلها على السحابة.",
+      ],
+    },
+    {
+      company: "3D Smart Factory",
+      role: "مهندس ذكاء اصطناعي",
+      period: "يوليو 2024 – أغسطس 2024",
+      bullets: [
+        "تطوير نظام ذكاء اصطناعي يتعرّف على الوجه، يُستعمل كخطوة تحقق إضافية عند تسجيل الدخول.",
+        "دمجه في تطبيق ويب، مع تحسينه ليقلّل الأخطاء في التعرّف ويُسرّع عملية التحقق.",
+      ],
+    },
+    {
+      company: "LeanSoft",
+      role: "مطوّر تطبيقات الهاتف",
+      period: "يوليو 2023 – أغسطس 2023",
+      bullets: [
+        "تطبيق هاتف (Android و iOS) لتسجيل دخول وخروج الموظفين لحظة بلحظة، مرتبط مباشرة ببرنامج التسيير Odoo.",
+      ],
+    },
+  ],
+
+  education: {
+    school: "المدرسة الوطنية للعلوم التطبيقية (ENSA)، الجديدة",
+    degree: "دبلوم مهندس دولة في هندسة المعلوميات والتقنيات الناشئة (2ITE)",
+    period: "2020 – 2025",
+  },
+
+  certifications: [
+    "IBM: Data Science Tools",
+    "Cisco: Introduction to Data Science",
+    "AWS Academy: Cloud Foundations",
+    "AWS Academy: Engineering / Operations Technician",
+  ],
+
+  contact: {
+    eyebrow: "تواصل",
+    title: ["لنعمل", "معًا", "."],
+    intro: "هل لديك مشروع، أو عرض عمل، أو مجرد سؤال؟ راسلني وسأردّ عليك في أقرب وقت.",
+    email: "البريد الإلكتروني",
+    phone: "الهاتف",
+  },
+
+  footer: {
+    madeIn: "صُنع في أكادير",
+    top: "إلى الأعلى ↑",
+  },
+
+  whatsapp: "راسلني على WhatsApp",
+};
+
+export const content: Record<Lang, Content> = { fr, en, ar };

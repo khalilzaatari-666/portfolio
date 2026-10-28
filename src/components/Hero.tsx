@@ -112,7 +112,7 @@ export default function Hero({ lang }: { lang: Lang }) {
                 <ArrowUpRight
                   width={15}
                   height={15}
-                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5"
                 />
               </a>
               <a
@@ -156,7 +156,7 @@ export default function Hero({ lang }: { lang: Lang }) {
 
       {/* Bandeau de stack qui défile */}
       <div className="overflow-hidden border-y border-line py-3">
-        <div className="marquee font-mono text-xs uppercase tracking-[0.14em] text-faint">
+        <div dir="ltr" className="marquee font-mono text-xs uppercase tracking-[0.14em] text-faint">
           {[...marquee, ...marquee].map((item, i) => (
             <span key={i} className="flex items-center">
               <span className="px-5">{item}</span>

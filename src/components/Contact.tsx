@@ -5,7 +5,7 @@ import { ArrowUpRight } from "./icons";
 export default function Contact({ lang }: { lang: Lang }) {
   const t = content[lang].contact;
   const channels = [
-    { label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+    { label: t.email, value: profile.email, href: `mailto:${profile.email}` },
     {
       label: t.phone,
       value: profile.phone,
@@ -43,7 +43,7 @@ export default function Contact({ lang }: { lang: Lang }) {
             <ArrowUpRight
               width={22}
               height={22}
-              className="shrink-0 self-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1"
+              className="shrink-0 self-center transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 rtl:group-hover:-translate-x-1"
             />
           </a>
 
@@ -59,6 +59,7 @@ export default function Contact({ lang }: { lang: Lang }) {
                       {...(external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
+                      dir="ltr"
                       className="u-link text-sm text-ink"
                     >
                       {c.value}

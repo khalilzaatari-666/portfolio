@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-// Heure locale à Agadir, mise à jour chaque minute.
+// Heure locale à Agadir (GMT, sans heure d'été), mise à jour chaque minute.
 export default function Clock() {
   const [time, setTime] = useState<string | null>(null);
 
@@ -10,7 +10,7 @@ export default function Clock() {
     const fmt = new Intl.DateTimeFormat("fr-FR", {
       hour: "2-digit",
       minute: "2-digit",
-      timeZone: "Africa/Casablanca",
+      timeZone: "UTC",
     });
     const tick = () => setTime(fmt.format(new Date()));
     tick();
@@ -19,9 +19,9 @@ export default function Clock() {
   }, []);
 
   return (
-    <span className="tabular-nums" suppressHydrationWarning>
+    <span dir="ltr" className="tabular-nums" suppressHydrationWarning>
       {time ?? "--:--"}
-      <span className="text-[var(--color-faint)]"> GMT+1</span>
+      <span className="text-[var(--color-faint)]"> GMT</span>
     </span>
   );
 }

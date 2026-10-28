@@ -45,9 +45,9 @@ export default function Projects({ lang }: { lang: Lang }) {
                 <h3 className="display text-[clamp(3rem,8vw,7rem)] text-ink">
                   {project.name}
                 </h3>
-                <p className="label pb-2 sm:text-right">
+                <p className="label pb-2 sm:text-end">
                   {project.year && (
-                    <span className="mr-3 text-accent">{project.year}</span>
+                    <span className="me-3 text-accent">{project.year}</span>
                   )}
                   {project.tagline}
                 </p>
