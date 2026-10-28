@@ -809,7 +809,6 @@ const ar: Content = {
       tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
       year: "2025–26",
       image: "/images/capitol.png",
-      liveUrl: "https://capitol.ma",
       repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
     },
     {
@@ -848,7 +847,6 @@ const ar: Content = {
       company: "Capitol.ma",
       role: "مطوّر مواقع وتطبيقات ويب",
       period: "أكتوبر 2025 – أغسطس 2026",
-      url: "https://capitol.ma",
       bullets: [
         "تطوير وصيانة capitol.ma، منصة للاستثمار موجّهة للسوق المغربية.",
         "بناء النظام الذي يعمل خلف المنصة: حسابات المستخدمين، الصلاحيات، حماية البيانات، ومنع الاستعمال المفرط أو المشبوه.",
