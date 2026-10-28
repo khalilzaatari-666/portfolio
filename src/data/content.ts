@@ -59,7 +59,7 @@ export type Project = {
   tags: string[];
   liveUrl?: string;
   repoUrl?: string;
-  image?: string; // capture d'écran, ex. "/images/capitol.jpg" (ratio 16:10 conseillé)
+  image?: string; // capture d'écran, ex. "/images/horkos.png" (ratio 16:10 conseillé)
   year?: string;
 };
 
@@ -231,8 +231,8 @@ const fr = {
 
   projectsSection: {
     eyebrow: "Projets",
-    title: ["Deux plateformes, ", "en production", "."] as Title,
-    description: "Conçues et déployées de bout en bout, aujourd'hui en ligne.",
+    title: ["Deux applications, ", "en ligne", "."] as Title,
+    description: "Conçues et déployées de bout en bout, consultables aujourd'hui.",
     open: "Ouvrir",
     screenshot: "Capture d'écran de",
     project: "Projet",
@@ -242,14 +242,15 @@ const fr = {
   },
   projects: [
     {
-      name: "Capitol.ma",
-      tagline: "Plateforme d'investissement pour le marché marocain",
+      name: "ERP Pépinière",
+      tagline: "Gestion d'une pépinière de plants maraîchers (démo)",
       description:
-        "Plateforme d'investissement (immobilier, art, private equity) en TypeScript full-stack : front-end React 19 (Tailwind, Radix UI) avec tableaux de bord interactifs (ApexCharts, Chart.js), back-end Node.js/Express avec Prisma & PostgreSQL. Authentification complète (vérification email, Google OAuth), contrôle d'accès par rôles, rate limiting via Redis et intégrations tierces (AWS S3, Twilio, WhatsApp, OpenAI, Calendly, Cloudflare Turnstile). Déploiement sur Fly.io (Docker, Nginx, CI GitHub Actions).",
-      tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
-      year: "2025–26",
-      image: "/images/capitol.png",
-      repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
+        "ERP conçu pour une pépinière de plants maraîchers, présenté ici en démo en marque blanche (lecture seule, identifiant demo / mot de passe demo). Suivi de production (semis variété et porte-greffe, germination, greffage, serres), stock, commandes et ventes, expéditions et transporteurs, fournisseurs, facturation, règlements et soldes clients, finances, gestion des utilisateurs par droits et export Excel. Single-page app React 19 / React Router avec Mantine, construite avec Vite et déployée sur Vercel.",
+      tags: ["React 19", "React Router", "Mantine", "Vite", "Excel (xlsx)", "Vercel"],
+      year: "2026",
+      image: "/images/pepiniere-demo.png",
+      liveUrl: "https://nabatat-demo.vercel.app",
+      repoUrl: "https://github.com/khalilzaatari-666/nabatat/tree/demo",
     },
     {
       name: "Horkos WM",
@@ -511,8 +512,8 @@ const en: Content = {
 
   projectsSection: {
     eyebrow: "Projects",
-    title: ["Two platforms, ", "in production", "."],
-    description: "Designed and shipped end to end, live today.",
+    title: ["Two applications, ", "online", "."],
+    description: "Designed and shipped end to end, open to explore today.",
     open: "Open",
     screenshot: "Screenshot of",
     project: "Project",
@@ -522,14 +523,15 @@ const en: Content = {
   },
   projects: [
     {
-      name: "Capitol.ma",
-      tagline: "Investment platform for the Moroccan market",
+      name: "Nursery ERP",
+      tagline: "Management for a vegetable seedling nursery (demo)",
       description:
-        "Investment platform (real estate, art, private equity) in full-stack TypeScript: React 19 front end (Tailwind, Radix UI) with interactive dashboards (ApexCharts, Chart.js), Node.js/Express back end with Prisma & PostgreSQL. Full authentication (email verification, Google OAuth), role-based access control, Redis rate limiting and third-party integrations (AWS S3, Twilio, WhatsApp, OpenAI, Calendly, Cloudflare Turnstile). Deployed on Fly.io (Docker, Nginx, GitHub Actions CI).",
-      tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
-      year: "2025–26",
-      image: "/images/capitol.png",
-      repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
+        "ERP built for a vegetable seedling nursery, shown here as a white-label demo (read-only, username demo / password demo). Production tracking (variety and rootstock sowing, germination, grafting, greenhouses), stock, orders and sales, shipping and carriers, suppliers, invoicing, payments and customer balances, finances, role-based user management and Excel export. React 19 / React Router single-page app with Mantine, built with Vite and deployed on Vercel.",
+      tags: ["React 19", "React Router", "Mantine", "Vite", "Excel (xlsx)", "Vercel"],
+      year: "2026",
+      image: "/images/pepiniere-demo.png",
+      liveUrl: "https://nabatat-demo.vercel.app",
+      repoUrl: "https://github.com/khalilzaatari-666/nabatat/tree/demo",
     },
     {
       name: "Horkos WM",
@@ -790,9 +792,9 @@ const ar: Content = {
 
   projectsSection: {
     eyebrow: "المشاريع",
-    title: ["منصّتان ", "تعملان اليوم", "."],
+    title: ["تطبيقان ", "متاحان اليوم", "."],
     description:
-      "صمّمتهما وبنيتهما وأطلقتهما بالكامل، ويستعملهما العملاء حاليًا.",
+      "صمّمتهما وبنيتهما وأطلقتهما بالكامل، ويمكنك تصفّحهما الآن.",
     open: "فتح",
     screenshot: "صورة من موقع",
     project: "مشروع",
@@ -802,14 +804,15 @@ const ar: Content = {
   },
   projects: [
     {
-      name: "Capitol.ma",
-      tagline: "منصة للاستثمار في المغرب",
+      name: "نظام تسيير المشتل",
+      tagline: "تسيير مشتل لشتلات الخضر (نسخة تجريبية)",
       description:
-        "منصة تتيح الاستثمار في العقار والفن والشركات غير المدرجة في البورصة. بنيتها بالكامل: لوحات تحكم تعرض الاستثمارات بالأرقام والرسوم، تسجيل دخول آمن بالبريد الإلكتروني أو بحساب Google، صلاحيات مختلفة لكل نوع من المستخدمين، وحماية من محاولات الاختراق والروبوتات. كما ربطتها بخدمات مثل WhatsApp والرسائل النصية وحجز المواعيد والذكاء الاصطناعي، وأتولّى نشر تحديثاتها بشكل آلي.",
-      tags: ["React 19", "Node.js / Express", "Prisma", "PostgreSQL", "OpenAI", "Fly.io"],
-      year: "2025–26",
-      image: "/images/capitol.png",
-      repoUrl: "https://github.com/khalilzaatari-666/capitol.ma",
+        "نظام متكامل صمّمته لمشتل متخصص في شتلات الخضر، وأعرضه هنا كنسخة تجريبية بدون علامة العميل (للاطلاع فقط، اسم المستخدم demo وكلمة المرور demo). يتابع مراحل الإنتاج من الزرع والإنبات إلى التطعيم داخل البيوت المغطاة، ويدير المخزون والطلبيات والمبيعات، وشحن الطلبيات مع الناقلين، والموردين، والفواتير والمدفوعات وأرصدة الزبائن، والحسابات المالية، مع صلاحيات مختلفة لكل مستخدم وإمكانية تصدير البيانات إلى Excel.",
+      tags: ["React 19", "React Router", "Mantine", "Vite", "Excel (xlsx)", "Vercel"],
+      year: "2026",
+      image: "/images/pepiniere-demo.png",
+      liveUrl: "https://nabatat-demo.vercel.app",
+      repoUrl: "https://github.com/khalilzaatari-666/nabatat/tree/demo",
     },
     {
       name: "Horkos WM",
